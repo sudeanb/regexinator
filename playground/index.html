@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regexinator — see your regex as a machine</title>
+<style>
+  :root {
+    --bg: #0d1117; --panel: #161b22; --border: #2b3444;
+    --text: #dbe4f0; --muted: #7d8899; --accent: #4ec9b0; --amber: #e5b567; --err: #e5735f;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 12px; }
+  header h1 { font-size: 19px; color: var(--accent); }
+  header span { color: var(--muted); font-size: 13px; }
+  header a { color: var(--muted); font-size: 13px; margin-left: auto; }
+  .bar { display: flex; gap: 10px; padding: 10px 20px; border-bottom: 1px solid var(--border); flex-wrap: wrap; align-items: center; }
+  input[type=text] { background: #0a0e15; color: var(--text); border: 1px solid var(--border); border-radius: 6px;
+                     padding: 7px 10px; font: 14px ui-monospace, Menlo, monospace; }
+  #pattern { width: 280px; } #input { width: 320px; }
+  select { background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; font-size: 13px; }
+  .verdict { font: 13px ui-monospace, monospace; }
+  .verdict.yes { color: var(--ok); } .verdict.no { color: var(--err); }
+  .grid { display: grid; grid-template-columns: 1fr 340px; gap: 12px; padding: 12px 20px; }
+  @media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
+  .card h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
+  #viz { width: 100%; height: 420px; background: #0a0e15; border-radius: 8px; }
+  .matchline { font: 14px ui-monospace, monospace; background: #0a0e15; border-radius: 6px; padding: 8px; margin-top: 8px; word-break: break-all; }
+  .matchline mark { background: #2d5a3f; color: #c9f7dd; border-radius: 3px; padding: 0 2px; }
+  table { width: 100%; border-collapse: collapse; font: 12.5px ui-monospace, Menlo, monospace; }
+  td, th { padding: 4px 6px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; }
+  .bar-row { display: flex; align-items: center; gap: 6px; margin: 4px 0; }
+  .bar-row .bar { height: 14px; background: var(--accent); border-radius: 3px; min-width: 2px; }
+  .bar-row.b .bar { background: var(--err); }
+  .bar-row .lbl { width: 90px; font: 12px ui-monospace, monospace; }
+  .sizes { font: 12px ui-monospace, monospace; color: var(--muted); margin-top: 6px; }
+  footer { padding: 8px 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1⟩R⟨ Regexinator</h1>
+  <span>your pattern as a machine — Thompson NFA, minimized DFA, and the naive backtracker side by side</span>
+  <a href="https://github.com/sudeanb/regexinator">GitHub ↗</a>
+</header>
+<div class="bar">
+  <input id="pattern" type="text" value="(a|b)*abb" placeholder="pattern">
+  <input id="input" type="text" value="babbababb" placeholder="test input">
+  <select id="machine">
+    <option value="nfa">NFA (Thompson)</option>
+    <option value="dfa">DFA (subset)</option>
+    <option value="min">DFA (minimized)</option>
+  </select>
+  <span id="verdict" class="verdict"></span>
+</div>
+<div class="grid">
+  <div class="card">
+    <h2>Automaton</h2>
+    <svg id="viz"></svg>
+  </div>
+  <div>
+    <div class="card">
+      <h2>Match</h2>
+      <div id="matchline" class="matchline"></div>
+      <div class="sizes" id="sizes"></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h2>Steps on this input</h2>
+      <div id="steps"></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h2>Catastrophic backtracking lab</h2>
+      <div class="bar-row"><button id="cat" class="ghost" style="border-radius:6px">Load (a|a)*b + a×24</button></div>
+      <div id="catout"></div>
+    </div>
+  </div>
+</div>
+<footer>All three engines implemented from scratch in this repo; the backtracker's step counter is why the red bar exists. See docs/ALGORITHMS.md.</footer>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

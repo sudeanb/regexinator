@@ -1,0 +1,9 @@
+{
+  "email-ish": "[a-z.]+@[a-z]+\\.[a-z]{2,3}",
+  "hex-color": "#[0-9a-f]{6}",
+  "time": "^([01]\\d|2[0-3]):[0-5]\\d$",
+  "ipv4-octet": "((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)",
+  "catastrophic-(a|a)*b": "(a|a)*b",
+  "nested-quantifier": "(a+)+b",
+  "word-boundary-ish": "^\\w+\\s\\w+$"
+}

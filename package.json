@@ -1,0 +1,10 @@
+{
+  "name": "regexinator",
+  "version": "0.1.0",
+  "description": "Regex engine built three ways from scratch: Thompson NFA, subset-construction DFA with Hopcroft/Moore minimization, and a naive backtracker — with an interactive SVG automaton visualizer and a catastrophic-backtracking performance lab. Zero dependencies.",
+  "type": "module",
+  "scripts": { "test": "node --test" },
+  "engines": { "node": ">=18" },
+  "keywords": ["regex", "nfa", "dfa", "thompson", "hopcroft", "automata", "backtracking", "visualization"],
+  "license": "MIT"
+}
